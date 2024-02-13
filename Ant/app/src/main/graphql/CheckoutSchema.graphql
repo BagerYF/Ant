@@ -1,0 +1,300 @@
+
+
+fragment CheckoutCommon on Checkout {
+    id
+    webUrl
+    lineItems(first: 5) {
+      edges {
+        node {
+          id
+          title
+          quantity
+        }
+      }
+    }
+    currencyCode
+    paymentDueV2 {
+      amount
+      currencyCode    
+    }
+    subtotalPriceV2 {
+      amount
+      currencyCode
+    }
+    totalPriceV2 {
+      amount
+      currencyCode
+    }
+    totalTaxV2 {
+      amount
+      currencyCode
+    }
+    totalDuties {
+      amount
+      currencyCode
+    }
+    lineItemsSubtotalPrice {
+      amount
+      currencyCode
+    }
+    taxExempt
+    taxesIncluded
+}
+
+
+mutation checkoutCreate($input: CheckoutCreateInput!) {
+  checkoutCreate(input: $input) {
+    checkout {
+      ...CheckoutCommon
+    }
+    checkoutUserErrors {
+      code
+      field
+      message
+    }
+    queueToken
+  }
+}
+
+mutation checkoutShippingAddressUpdateV2($checkoutId: ID!, $shippingAddress: MailingAddressInput!) {
+  checkoutShippingAddressUpdateV2(checkoutId: $checkoutId, shippingAddress: $shippingAddress) {
+    checkout {
+      ...CheckoutCommon
+      availableShippingRates {
+        ready
+        shippingRates {
+          handle
+          priceV2 {
+            amount
+            currencyCode
+          }
+          title
+        }
+      }
+    }
+    checkoutUserErrors {
+      code
+      field
+      message
+    }
+  }
+}
+
+    query checkoutShippingLines($id: ID!) {
+      node(id: $id) {
+        ... on Checkout {
+          id
+          webUrl
+          availableShippingRates {
+            ready
+            shippingRates {
+              handle
+              priceV2 {
+                amount
+                currencyCode
+              }
+              title
+            }
+          }
+        }
+      }
+    }
+
+mutation checkoutShippingLineUpdate($checkoutId: ID!, $shippingRateHandle: String!) {
+  checkoutShippingLineUpdate(checkoutId: $checkoutId, shippingRateHandle: $shippingRateHandle) {
+    checkout {
+      ...CheckoutCommon
+      availableShippingRates {
+        ready
+        shippingRates {
+          handle
+          priceV2 {
+            amount
+            currencyCode
+          }
+          title
+        }
+      }
+      shippingLine {
+        handle
+        priceV2 {
+          amount
+          currencyCode
+        }
+        title
+      }
+    }
+    checkoutUserErrors {
+      code
+      field
+      message
+    }
+  }
+}
+
+mutation checkoutDiscountCodeApplyV2($checkoutId: ID!, $discountCode: String!) {
+  checkoutDiscountCodeApplyV2(checkoutId: $checkoutId, discountCode: $discountCode) {
+    checkout {
+      ...CheckoutCommon
+      availableShippingRates {
+        ready
+        shippingRates {
+          handle
+          priceV2 {
+            amount
+            currencyCode
+          }
+          title
+        }
+      }
+      shippingLine {
+        handle
+        priceV2 {
+          amount
+          currencyCode
+        }
+        title
+      }
+    }
+    checkoutUserErrors {
+      code
+      field
+      message
+    }
+  }
+}
+
+mutation checkoutDiscountCodeRemove($checkoutId: ID!) {
+  checkoutDiscountCodeRemove(checkoutId: $checkoutId) {
+    checkout {
+      ...CheckoutCommon
+      availableShippingRates {
+        ready
+        shippingRates {
+          handle
+          priceV2 {
+            amount
+            currencyCode
+          }
+          title
+        }
+      }
+      shippingLine {
+        handle
+        priceV2 {
+          amount
+          currencyCode
+        }
+        title
+      }
+    }
+    checkoutUserErrors {
+      code
+      field
+      message
+    }
+  }
+}
+
+mutation checkoutCustomerAssociateV2($checkoutId: ID!, $customerAccessToken: String!) {
+  checkoutCustomerAssociateV2(checkoutId: $checkoutId, customerAccessToken: $customerAccessToken) {
+    checkout {
+      ...CheckoutCommon
+      availableShippingRates {
+        ready
+        shippingRates {
+          handle
+          priceV2 {
+            amount
+            currencyCode
+          }
+          title
+        }
+      }
+      shippingLine {
+        handle
+        priceV2 {
+          amount
+          currencyCode
+        }
+        title
+      }
+    }
+    checkoutUserErrors {
+      code
+      field
+      message
+    }
+    customer {
+      id
+    }
+  }
+}
+
+mutation checkoutCompleteFree($checkoutId: ID!) {
+  checkoutCompleteFree(checkoutId: $checkoutId) {
+    checkout {
+      ...CheckoutCommon
+      availableShippingRates {
+        ready
+        shippingRates {
+          handle
+          priceV2 {
+            amount
+            currencyCode
+          }
+          title
+        }
+      }
+      shippingLine {
+        handle
+        priceV2 {
+          amount
+          currencyCode
+        }
+        title
+      }
+    }
+    checkoutUserErrors {
+      code
+      field
+      message
+    }
+  }
+}
+
+mutation checkoutCompleteWithCreditCardV2($checkoutId: ID!, $payment: CreditCardPaymentInputV2!) {
+  checkoutCompleteWithCreditCardV2(checkoutId: $checkoutId, payment: $payment) {
+    checkout {
+      ...CheckoutCommon
+      availableShippingRates {
+        ready
+        shippingRates {
+          handle
+          priceV2 {
+            amount
+            currencyCode
+          }
+          title
+        }
+      }
+      shippingLine {
+        handle
+        priceV2 {
+          amount
+          currencyCode
+        }
+        title
+      }
+    }
+    checkoutUserErrors {
+      code
+      field
+      message
+    }
+    payment {
+      id
+    }
+  }
+}
+
